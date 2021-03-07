@@ -1,0 +1,3 @@
+fix: true               # default: false
+parallel: true          # default: false
+format: progress        # default: Standard::Formatter
