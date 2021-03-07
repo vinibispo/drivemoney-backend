@@ -47,3 +47,4 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "lefthook"
 
 gem "jbuilder", "~> 2.11"
+gem "graphql"
