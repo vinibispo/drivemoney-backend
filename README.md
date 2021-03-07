@@ -1,5 +1,7 @@
 # README
 
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
