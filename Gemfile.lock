@@ -99,6 +99,7 @@ GEM
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jsonapi-renderer (0.2.2)
+    jwt (2.2.2)
     lefthook (0.7.2)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -274,6 +275,7 @@ DEPENDENCIES
   graphiql-rails
   graphql
   jbuilder (~> 2.11)
+  jwt
   lefthook
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)

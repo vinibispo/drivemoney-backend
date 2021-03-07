@@ -44,3 +44,5 @@ pre-commit:
       glob: "*.rb"
       run: bundle exec standardrb --force-exclusion {files}
       runner: docker-compose exec web bundle exec standardrb --force-exclusion {files}
+    rspec:
+      run: docker-compose exec -e "RAILS_ENV=test" web bundle exec rspec
