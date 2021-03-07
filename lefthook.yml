@@ -37,8 +37,10 @@ pre-commit:
   parallel: true
   commands:
     audit:
-      run: docker-compose exec web bundle exec brakeman --no-pager
+      run: bundle exec brakeman --no-pager
+      runner: docker-compose exec web {cmd}
     lint:
       files: git diff --name-only --staged
       glob: "*.rb"
-      run: docker-compose exec web bundle exec standardrb --force-exclusion {files}
+      run: bundle exec standardrb --force-exclusion {files}
+      runner: docker-compose exec web {cmd}
