@@ -36,6 +36,10 @@ group :development, :test do
   gem "pry-byebug"
 end
 
+group :test do
+  gem 'shoulda-matchers', '~> 4.0'
+end
+
 group :development do
   gem "brakeman"
   gem "listen", "~> 3.2"
