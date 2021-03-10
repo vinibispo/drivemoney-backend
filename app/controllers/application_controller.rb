@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
   before_action :authorized
 
+  protected
+
   def encode_token(payload)
     JWT.encode(payload, "s3cr3t")
   end
@@ -35,5 +37,13 @@ class ApplicationController < ActionController::API
 
   def logged_in?
     !!logged_in_user
+  end
+
+  def render_json(status, json = {})
+    render status: status, json: json
+  end
+
+  def show_parameter_missing_error(exception)
+    render_json(400, error: exception.message)
   end
 end

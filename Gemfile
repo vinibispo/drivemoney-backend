@@ -59,3 +59,6 @@ gem "lefthook"
 gem "jbuilder", "~> 2.11"
 gem "graphql"
 gem "jwt"
+gem "u-case", "~> 4.3.0"
+gem "rubycritic", require: false
+gem "letter_opener", group: :development
