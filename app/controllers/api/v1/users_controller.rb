@@ -4,7 +4,7 @@ module Api
       before_action :authorized, only: [:auto_login]
 
       def create
-        RegistrationUser
+        RegisterUser
           .call(user_params.to_h)
           .on_success { |result| render_user_json(:created, result[:user]) }
           .on_failure(:invalid_params) { |data| render_unprocessable_entity(data[:errors]) }

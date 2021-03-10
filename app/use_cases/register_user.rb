@@ -1,12 +1,12 @@
-class RegistrationUser < Micro::Case
+class RegisterUser < Micro::Case
   attribute :first_name
   attribute :email
   attribute :last_name
-  attribute :password, default: -> value {value.to_s.strip}
-  attribute :password_confirmation, default: -> value {value.to_s.strip}
+  attribute :password, default: ->(value) { value.to_s.strip }
+  attribute :password_confirmation, default: ->(value) { value.to_s.strip }
   def call!
     transaction {
-        validate_password_params
+      validate_password_params
         .then(method(:compare_passwords))
         .then(method(:create_user))
     }.then(method(:send_mail_welcome))
@@ -14,7 +14,6 @@ class RegistrationUser < Micro::Case
   end
 
   private
-
 
   def validate_password_params
     errors = {}
