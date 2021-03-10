@@ -4,13 +4,14 @@ module Api
       before_action :authorized, only: [:auto_login]
 
       def create
-        CreateUser
-          .call(params: params)
+        RegistrationUser
+          .call(user_params.to_h)
           .on_success { |result| render_user_json(:created, result[:user]) }
           .on_failure(:invalid_params) { |data| render_unprocessable_entity(data[:errors]) }
           .on_failure(:wrong_passwords) { |data| render_unprocessable_entity(data[:user]) }
           .on_failure(:invalid_user) { |data| render_unprocessable_entity(data[:user]) }
-          .on_failure(:parameter_missing) { |data| render_json(:bad_request, data[:message]) }
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def login
@@ -30,7 +31,7 @@ module Api
       private
 
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :password)
+        params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
       end
 
       private
