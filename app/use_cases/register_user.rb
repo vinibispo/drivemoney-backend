@@ -1,3 +1,4 @@
+#RegisterUser is responsible for registering a user
 class RegisterUser < Micro::Case
   attribute :first_name
   attribute :email
@@ -28,6 +29,7 @@ class RegisterUser < Micro::Case
     error_data = {user: {password_confirmation: ["doesn't match password"]}}
     Failure(:wrong_passwords, result: error_data)
   end
+
 
   def create_user(**user_data)
     first_name, last_name, email, password = user_data.values_at(:first_name, :last_name, :email, :password)

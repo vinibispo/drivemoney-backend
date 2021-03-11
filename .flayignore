@@ -1,0 +1,2 @@
+db/**/*
+app/controllers/api/v1/graphql_controller.rb
