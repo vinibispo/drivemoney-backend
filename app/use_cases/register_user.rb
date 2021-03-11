@@ -1,4 +1,4 @@
-#RegisterUser is responsible for registering a user
+# RegisterUser is responsible for registering a user
 class RegisterUser < Micro::Case
   attribute :first_name
   attribute :email
@@ -11,6 +11,7 @@ class RegisterUser < Micro::Case
         .then(method(:compare_passwords))
         .then(method(:create_user))
     }.then(method(:send_mail_welcome))
+      .then(Token::Create)
       .then(method(:serialize_user))
   end
 
@@ -30,7 +31,6 @@ class RegisterUser < Micro::Case
     Failure(:wrong_passwords, result: error_data)
   end
 
-
   def create_user(**user_data)
     first_name, last_name, email, password = user_data.values_at(:first_name, :last_name, :email, :password)
     user = User.new(first_name: first_name, last_name: last_name, email: email, password: password)
@@ -41,9 +41,9 @@ class RegisterUser < Micro::Case
     end
   end
 
-  def serialize_user(user:, **)
+  def serialize_user(user:, token:, **)
     user_as_json = user.as_json(only: [:id, :first_name, :last_name, :email])
-    Success result: {user: user_as_json}
+    Success result: {user: user_as_json, token: token}
   end
 
   def send_mail_welcome(user:, **)
