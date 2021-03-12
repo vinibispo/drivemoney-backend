@@ -1,10 +1,10 @@
-  require "uri"
+require "uri"
 module Users
   class Login < Micro::Case
     attribute :email
     attribute :password, default: ->(value) { value.to_s.strip }
 
-    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+    validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}
     validates :password, presence: true
 
     def call!
@@ -18,7 +18,7 @@ module Users
     private
 
     def valid_params
-     Success result: attributes(:email, :password)
+      Success result: attributes(:email, :password)
     end
 
     def find_user_by_email(email:, **)

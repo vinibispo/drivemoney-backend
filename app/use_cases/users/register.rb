@@ -1,4 +1,4 @@
-  # RegisterUser is responsible for registering a user
+# RegisterUser is responsible for registering a user
 module Users
   class Register < Micro::Case
     attribute :first_name

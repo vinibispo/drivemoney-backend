@@ -18,8 +18,8 @@ module Api
       def login
         Users::Login
           .call(login_params.to_h) do |on|
-            on.success { |result|  render_user_json(:ok, result[:user]) }
-            on.failure(:user_not_found)  { |data| render_json(:unauthorized, {error: "User not found"}) }
+            on.success { |result| render_user_json(:ok, result[:user]) }
+            on.failure(:user_not_found) { |data| render_json(:unauthorized, {error: "User not found"}) }
             on.failure(:unauthorized) { |data| render_json(:unauthorized, {error: "User not found"}) }
           end
       end
