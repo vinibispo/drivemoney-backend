@@ -35,8 +35,6 @@ group :development, :test do
   gem "standard"
   gem "ffaker"
   gem "factory_bot_rails"
-  gem "pry-rails"
-  gem "pry-byebug"
 end
 
 group :test do
@@ -59,3 +57,8 @@ gem "jbuilder", "~> 2.11"
 gem "jwt"
 gem "u-case", "~> 4.3.0", require: 'u-case/with_activemodel_validation'
 gem "letter_opener", group: :development
+gem "pry-rails"
+gem "pry-byebug"
+gem 'pry-remote'
+gem 'pry-nav'
+gem 'awesome_print'
