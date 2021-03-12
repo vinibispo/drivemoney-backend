@@ -8,14 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Heroku Action
+      - uses: actions/checkout@v2
         # You may pin to the exact commit or the version.
         # uses: CDNievas/heroku-action@c9cf9c85571e67583e44ec92c0d1113f66b0e838
-        uses: CDNievas/heroku-action@v1.0
+      - uses: CDNievas/heroku-action@v1.0
         with:
           # Used for authentication. You can find it in your heroku homepage account settings
-          heroku_api_key: ${HEROKU_API_KEY}
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
             # Email from Heroku Account
-          heroku_email: ${HEROKU_API_EMAIL}
+          heroku_email: ${{secrets.HEROKU_API_EMAIL}}
           # The appname to use for deploying/updating
-          heroku_app_name: ${HEROKU_APP_NAME}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
