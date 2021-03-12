@@ -14,4 +14,12 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "POST /api/v1/users" do
+    let(:user) { attributes_for(:user) }
+    it "should create a new user" do
+      post "/api/v1/users", params: { user: user.merge({password_confirmation: user[:password]}) }
+      expect(response).to have_http_status(:created)
+    end
+  end
 end
