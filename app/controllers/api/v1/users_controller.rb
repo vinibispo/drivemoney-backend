@@ -22,6 +22,8 @@ module Api
             on.failure(:user_not_found) { |data| render_json(:unauthorized, {error: "User not found"}) }
             on.failure(:unauthorized) { |data| render_json(:unauthorized, {error: "User not found"}) }
           end
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def auto_login
