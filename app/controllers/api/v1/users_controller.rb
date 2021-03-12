@@ -4,24 +4,24 @@ module Api
       before_action :authorized, only: [:auto_login]
 
       def create
-        RegisterUser
-          .call(user_params.to_h)
-          .on_success { |result| render_user_json(:created, result[:user]) }
-          .on_failure(:invalid_params) { |data| render_unprocessable_entity(data[:errors]) }
-          .on_failure(:wrong_passwords) { |data| render_unprocessable_entity(data[:user]) }
-          .on_failure(:invalid_user) { |data| render_unprocessable_entity(data[:user]) }
+        Users::Register
+          .call(user_params.to_h) do |on|
+            on.success { |result| render_user_json(:created, result[:user]) }
+            on.failure(:invalid_params) { |data| render_unprocessable_entity(data[:errors]) }
+            on.failure(:wrong_passwords) { |data| render_unprocessable_entity(data[:user]) }
+            on.failure(:invalid_user) { |data| render_unprocessable_entity(data[:user]) }
+          end
       rescue ActionController::ParameterMissing => exception
         render_json(:bad_request, error: exception.message)
       end
 
       def login
-        @user = User.find_by(email: params[:email])
-        if @user&.authenticate(params[:password])
-          token = encode_token({user_id: @user.id})
-          render json: {user: @user, token: token}, status: :ok
-        else
-          render json: {error: "Invalid username or password"}, status: :unauthorized
-        end
+        Users::Login
+          .call(login_params.to_h) do |on|
+            on.success { |result|  render_user_json(:ok, result[:user]) }
+            on.failure(:user_not_found)  { |data| render_json(:unauthorized, {error: "User not found"}) }
+            on.failure(:unauthorized) { |data| render_json(:unauthorized, {error: "User not found"}) }
+          end
       end
 
       def auto_login
@@ -32,6 +32,10 @@ module Api
 
       def user_params
         params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
+      end
+
+      def login_params
+        params.permit(:email, :password)
       end
 
       private

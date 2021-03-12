@@ -1,4 +1,4 @@
-module Token
+module Tokens
   class Decode < Micro::Case
     attribute :token
     def call!

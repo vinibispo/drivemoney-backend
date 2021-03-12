@@ -1,4 +1,4 @@
-module Token
+module Tokens
   class Create < Micro::Case
     attribute :user
     def call!
