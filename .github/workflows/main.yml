@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 jobs:
   build:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Heroku Action
         # You may pin to the exact commit or the version.
