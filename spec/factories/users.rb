@@ -3,6 +3,6 @@ FactoryBot.define do
     first_name { "MyString" }
     last_name { "MyString" }
     email { FFaker::Internet.email }
-    password { FFaker::Internet.password }
+    password { FFaker::Internet.password(8) }
   end
 end

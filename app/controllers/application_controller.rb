@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   def decoded_token
     if auth_header
       token = auth_header.split(" ")[1]
-      Token::Decode.call(token: token)
+      Tokens::Decode.call(token: token)
     end
   end
 
