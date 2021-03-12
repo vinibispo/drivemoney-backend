@@ -3,8 +3,8 @@ module Users
     attribute :id
     def call!
       user = User.find_by(id: id)
-     return Success result: { user: user } if user.present?
-     Failure(:user_not_found)
+      return Success result: {user: user} if user.present?
+      Failure(:user_not_found)
     end
   end
 end
