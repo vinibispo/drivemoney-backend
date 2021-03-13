@@ -43,7 +43,7 @@ module Api
 
       def reset_password
         Users::ResetPassword
-          .call(user: user_params.to_h) do |on|
+          .call(user_params.to_h) do |on|
             on.success { |result| render_json(:accepted, {message: "Password updated successfully"}) }
             on.failure(:not_found) { |result| render_json(:not_found, {message: "User not found"}) }
             on.failure(:date_expired) { |result| render_json(:gone, {message: "Time expired"}) }

@@ -19,8 +19,8 @@ module Users
     end
 
     def find_user_token
-      user_token = UserToken.last
-      return Failure(:not_found) unless user_token.token == token
+      user_token = UserToken.find_by(token: token)
+      return Failure(:not_found) unless user_token
       Success result: {user_token: user_token}
     end
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post "/login", to: "users#login"
       get "/auto_login", to: "users#auto_login"
       post "/forgot_password", to: "users#forgot_password"
+      post "/reset_password", to: "users#reset_password"
     end
   end
 end
