@@ -96,4 +96,34 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:bad_request)
     end
   end
+
+  describe "POST /api/v1/forgot_password" do
+    let(:password) { FFaker::Internet.password(8) }
+    let(:user) { create(:user, password: password) }
+    let(:token) { create(:user_token, user: user) }
+    it "recieves status of success" do
+      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: password, token: token.token}}
+      expect(response).to have_http_status(:success)
+    end
+
+    it "recieves status of bad request when has invalid params" do
+      post "/api/v1/reset_password", params: {batata: "Batata"}
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it "recieves status of not found when has token invalid" do
+      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: password, token: SecureRandom.uuid}}
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "recieves status of gone when has expired date" do
+      token = create(:user_token, created_at: Time.now - 1.day)
+      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: password, token: token.token}}
+      expect(response).to have_http_status(:gone)
+    end
+
+    it "recieves status of bad request when password does not match" do
+      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: FFaker::Internet.password(8), token: token}}
+    end
+  end
 end
