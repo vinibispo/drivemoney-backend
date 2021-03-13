@@ -30,3 +30,4 @@ volumes/
 # Ignore application configuration
 /config/application.yml
 /coverage/*
+lefthook.yml
