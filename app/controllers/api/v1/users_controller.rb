@@ -30,6 +30,14 @@ module Api
         render json: @user
       end
 
+      def forgot_password
+        Users::ForgotPassword
+          .call(email: user_params[:email]) do |on|
+            on.success { |result| render_user_json(:ok, result.data[:user]) }
+            on.failure(:user_not_found) { |result| render_user_json(:not_found, {errors: ["User not found"]}) }
+          end
+      end
+
       private
 
       def user_params
