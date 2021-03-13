@@ -68,4 +68,22 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:unauthorized)
     end
   end
+
+  describe "POST /api/v1/forgot_password" do
+    let(:user) { create(:user) }
+    it "recieves status OK when sends email" do
+      post "/api/v1/forgot_password", params: {user: {email: user[:email]}}
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "recieves status Not Found when not sends email valid" do
+      post "/api/v1/forgot_password", params: {user: {email: "#{user[:email]}.com"}}
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it "recieves status Bad Request when not sends params correctly" do
+      post "/api/v1/forgot_password", params: {email: user[:email]}
+      expect(response).to have_http_status(:bad_request)
+    end
+  end
 end

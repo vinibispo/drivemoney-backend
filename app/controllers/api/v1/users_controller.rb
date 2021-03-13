@@ -31,11 +31,14 @@ module Api
       end
 
       def forgot_password
+        email = user_params[:email]
         Users::ForgotPassword
-          .call(email: user_params[:email]) do |on|
+          .call(email: email) do |on|
             on.success { |result| render_user_json(:ok, result.data[:user]) }
             on.failure(:user_not_found) { |result| render_user_json(:not_found, {errors: ["User not found"]}) }
           end
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       private
