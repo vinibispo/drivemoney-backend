@@ -32,6 +32,16 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
+    it "does not create a user when password does not match password_confirmation" do
+      post "/api/v1/users", params: {user: user.merge({password_confirmation: FFaker::Internet.password(8)})}
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "does not create a user when password has no email" do
+      post "/api/v1/users", params: {user: user.merge({email: nil})}
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
     it "should not create a user when has invalid parameters" do
       post "/api/v1/users", params: {batata: "batata"}
       expect(response).to have_http_status(:bad_request)

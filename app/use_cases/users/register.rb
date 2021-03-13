@@ -38,8 +38,6 @@ module Users
       user = User.new(first_name: first_name, last_name: last_name, email: email, password: password)
       if user.save
         Success result: {user: user}
-      else
-        Failure(:invalid_user, result: {user: user.errors.as_json})
       end
     end
 
