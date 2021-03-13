@@ -21,6 +21,8 @@ services:
     environment:
       RAILS_ENV: development
       BUNDLE_PATH: /bundle/vendor
+      LAUNCHY_DRY_RUN: "true"
+      BROWSER: "/dev/null"
     volumes:
       - .:/myapp
       - bundle_path:/bundle
@@ -35,6 +37,8 @@ services:
       RAILS_ENV: development
       BUNDLE_PATH: /bundle/vendor
       WEB_CONCURRENCY: 0
+      LAUNCHY_DRY_RUN: "true"
+      BROWSER: "/dev/null"
     volumes:
       - .:/myapp
       - bundle_path:/bundle
