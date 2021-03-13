@@ -29,4 +29,3 @@ volumes/
 
 # Ignore application configuration
 /config/application.yml
-lefthook.yml
