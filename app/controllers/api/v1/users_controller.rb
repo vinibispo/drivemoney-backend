@@ -41,10 +41,22 @@ module Api
         render_json(:bad_request, error: exception.message)
       end
 
+      def reset_password
+        Users::ResetPassword
+          .call(user: user_params.to_h) do |on|
+            on.success { |result| render_json(:accepted, {message: "Password updated successfully"}) }
+            on.failure(:not_found) { |result| render_json(:not_found, {message: "User not found"}) }
+            on.failure(:date_expired) { |result| render_json(:gone, {message: "Time expired"}) }
+            on.failure(:invalid_params) { |result| render_json(:bad_request, {message: "Password does not match"}) }
+          end
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
+      end
+
       private
 
       def user_params
-        params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email)
+        params.require(:user).permit(:first_name, :last_name, :password, :password_confirmation, :email, :token)
       end
 
       def login_params
