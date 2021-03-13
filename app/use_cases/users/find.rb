@@ -1,5 +1,5 @@
 module Users
-  class Find
+  class Find < Micro::Case
     attribute :id
     def call!
       user = User.find_by(id: id)
