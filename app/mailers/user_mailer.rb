@@ -9,4 +9,9 @@ class UserMailer < ApplicationMailer
       content_type: "text/plain;charset=UTF-8"
     )
   end
+
+  def forgot_password(id:, token:, **)
+    @user = Users::Find.call(id: id).data[:user]
+    mail to: @user.email
+  end
 end
