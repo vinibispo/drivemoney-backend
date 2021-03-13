@@ -39,12 +39,13 @@ end
 
 group :test do
   gem "shoulda-matchers", "~> 4.0"
+  gem "simplecov", require: false
 end
 
 group :development do
   gem "brakeman"
   gem "listen", "~> 3.2"
-  gem 'letter_opener_web', '~> 1.0'
+  gem "letter_opener_web", "~> 1.0"
   gem "better_errors"
   gem "binding_of_caller"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -58,11 +59,11 @@ gem "lefthook"
 
 gem "jbuilder", "~> 2.11"
 gem "jwt"
-gem "u-case", "~> 4.3.0", require: 'u-case/with_activemodel_validation'
+gem "u-case", "~> 4.3.0", require: "u-case/with_activemodel_validation"
 gem "letter_opener", group: :development
 gem "pry-rails"
 gem "pry-byebug"
-gem 'pry-remote'
-gem 'awesome_print'
+gem "pry-remote"
+gem "awesome_print"
 gem "standard"
 gem "securerandom"

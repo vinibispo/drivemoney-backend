@@ -18,7 +18,7 @@ module Api
       def login
         Users::Login
           .call(login_params.to_h) do |on|
-            on.success { |result| render_user_json(:ok, result[:user]) }
+            on.success { |result| render_json(:ok, {user: result[:user], token: result[:token]}) }
             on.failure(:user_not_found) { |data| render_json(:unauthorized, {error: "User not found"}) }
             on.failure(:unauthorized) { |data| render_json(:unauthorized, {error: "User not found"}) }
           end
@@ -45,7 +45,11 @@ module Api
       end
 
       def login_params
-        params.permit(:email, :password)
+        if params[:email].present? && params[:password].present?
+          params.permit(:email, :password)
+        else
+          raise ActionController::ParameterMissing, "email and password must be provided"
+        end
       end
 
       private
