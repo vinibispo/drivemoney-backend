@@ -14,8 +14,7 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  setup:
-    name: Setup
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,7 +29,7 @@ jobs:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ env.cache-name }}-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
-          ${{ runner.os }}-gems-
+            ${{ runner.os }}-gems-
       - name: Bundle install
         run: |
           bundle config set without 'production staging'
@@ -46,10 +45,6 @@ jobs:
       - name: Echo file changes
         run: |
           echo Changed files: ${{ steps.get_file_changes.outputs.files }}
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Standard checks
         run: |
           bundle exec rails standard
@@ -57,6 +52,34 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7.2'
+      - name: Cache gems
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ env.cache-name }}-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Bundle install
+        run: |
+          bundle config set without 'production staging'
+          bundle config path vendor/bundle
+          bundle install
+          git checkout Gemfile.lock
+      - name: Get file changes
+        id: get_file_changes
+        uses: dorner/file-changes-action@v1.2.0
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          plaintext: true
+      - name: Echo file changes
+        run: |
+          echo Changed files: ${{ steps.get_file_changes.outputs.files }}
       - name: Audit
         run: |
           bundle exec brakeman --no-pager
