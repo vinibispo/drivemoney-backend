@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_13_145655) do
+ActiveRecord::Schema.define(version: 2021_03_14_010318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "name"
+    t.money "initial_value", scale: 2
+    t.bigint "user_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -36,6 +46,17 @@ ActiveRecord::Schema.define(version: 2021_03_13_145655) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.string "description"
+    t.string "category"
+    t.money "value", scale: 2
+    t.integer "type"
+    t.bigint "account_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_transactions_on_account_id"
+  end
+
   create_table "user_tokens", force: :cascade do |t|
     t.string "token"
     t.bigint "user_id", null: false
@@ -54,6 +75,8 @@ ActiveRecord::Schema.define(version: 2021_03_13_145655) do
     t.integer "status", default: 0
   end
 
+  add_foreign_key "accounts", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "transactions", "accounts"
   add_foreign_key "user_tokens", "users"
 end
