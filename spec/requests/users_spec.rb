@@ -97,7 +97,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  describe "POST /api/v1/forgot_password" do
+  describe "POST /api/v1/reset_password" do
     let(:password) { FFaker::Internet.password(8) }
     let(:user) { create(:user, password: password) }
     let(:token) { create(:user_token, user: user) }

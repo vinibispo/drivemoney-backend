@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  before_action :set_default_request_format
+
   protected
 
   def authorized
@@ -33,5 +35,9 @@ class ApplicationController < ActionController::API
 
   def render_json(status, json = {})
     render status: status, json: json
+  end
+
+  def set_default_request_format
+    request.format = :json unless params[:format]
   end
 end
