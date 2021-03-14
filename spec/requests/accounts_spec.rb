@@ -77,7 +77,7 @@ RSpec.describe "Accounts", type: :request do
     end
   end
 
-  describe "PUT /destroy" do
+  describe "DELETE /destroy" do
     let(:user) { create(:user) }
     let(:token) { Tokens::Create.call(user: user).data[:token] }
     let(:account_created) { create(:account, user: user) }
