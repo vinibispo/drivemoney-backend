@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get "/auto_login", to: "users#auto_login"
       post "/forgot_password", to: "users#forgot_password"
       post "/reset_password", to: "users#reset_password"
+      resources :accounts do
+        resources :transactions
+      end
     end
   end
 end
