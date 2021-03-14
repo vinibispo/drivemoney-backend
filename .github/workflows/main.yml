@@ -42,7 +42,6 @@ jobs:
       - name: Run tests
         run: bundler exec rspec
       - name: Upload coverage results
-      - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
         with:
