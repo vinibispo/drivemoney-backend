@@ -1,5 +1,6 @@
 FROM ruby:2.7.2
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client zsh
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 ENV app /myapp
 WORKDIR ${app}
 COPY . ${app}
