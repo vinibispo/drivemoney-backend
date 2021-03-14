@@ -5,6 +5,8 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: 12345678
   POSTGRES_DB: postgres
+  LAUNCHY_DRY_RUN: "true"
+  BROWSER: "/dev/null"
 
 on:
   push:
@@ -21,8 +23,6 @@ jobs:
         image: postgres:latest
         ports:
           - 5432:5432
-        env:
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-ruby@v1
