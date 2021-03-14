@@ -60,7 +60,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  host: db
+  host: <%= Figaro.env.db_host || 'localhost' %>
   username: postgres
   password: 12345678
   database: drivemoney_backend_test
