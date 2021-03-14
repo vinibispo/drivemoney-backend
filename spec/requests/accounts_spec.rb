@@ -42,6 +42,7 @@ RSpec.describe "Accounts", type: :request do
     end
     it "returns ok when has right token" do
       post "/api/v1/accounts", params: {account: account}, headers: {"Authorization": "Bearer #{token}"}
+      puts "response #{response.body}"
       expect(response).to have_http_status(:created)
     end
 

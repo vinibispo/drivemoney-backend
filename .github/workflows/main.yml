@@ -7,6 +7,7 @@ env:
   POSTGRES_DB: postgres
   LAUNCHY_DRY_RUN: "true"
   BROWSER: "/dev/null"
+  SECRET_JWT_KEY: "123456"
 
 on:
   push:
@@ -34,17 +35,13 @@ jobs:
         run: |
           gem install bundler
           bundler install
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 12345678
-          POSTGRES_DB: postgres
+      - name: Create database
         run: |
-          cp config/database.ci.yml config/database.yml
-          bundle exec rails db:schema:load
-          bundle exec rspec --format progress
+          bundler exec rails db:create RAILS_ENV=test
+          bundler exec rails db:migrate RAILS_ENV=test
+      - name: Run tests
+        run: bundler exec rspec
+      - name: Upload coverage results
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
