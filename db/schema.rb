@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_14_010318) do
+ActiveRecord::Schema.define(version: 2021_03_14_115045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string "name"
-    t.money "initial_value", scale: 2
+    t.money "initial_value", scale: 2, default: "0.0"
     t.bigint "user_id", null: false
-    t.boolean "active"
+    t.boolean "active", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_accounts_on_user_id"

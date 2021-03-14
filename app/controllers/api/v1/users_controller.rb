@@ -6,7 +6,7 @@ module Api
       def create
         Users::Register
           .call(user_params.to_h) do |on|
-            on.success { |result| render_user_json(:created, result[:user]) }
+            on.success { |result| render_json(:created, {user: result[:user], token: result[:token]}) }
             on.failure(:invalid_params) { |data| render_unprocessable_entity(data[:errors]) }
             on.failure(:wrong_passwords) { |data| render_unprocessable_entity(data[:user]) }
             on.failure(:invalid_user) { |data| render_unprocessable_entity(data[:user]) }
