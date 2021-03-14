@@ -5,9 +5,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: 12345678
   POSTGRES_DB: postgres
-  LAUNCHY_DRY_RUN: "true"
-  BROWSER: "/dev/null"
-  SECRET_JWT_KEY: "123456"
+  SECRET_JWT_KEY: '123456'
 
 on:
   push:
@@ -24,6 +22,8 @@ jobs:
         image: postgres:latest
         ports:
           - 5432:5432
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-ruby@v1
@@ -35,12 +35,17 @@ jobs:
         run: |
           gem install bundler
           bundler install
-      - name: Create database
-        run: |
-          bundler exec rails db:create RAILS_ENV=test
-          bundler exec rails db:migrate RAILS_ENV=test
       - name: Run tests
-        run: bundler exec rspec
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 12345678
+          POSTGRES_DB: postgres
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:schema:load
+          bundle exec rspec --format progress
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
