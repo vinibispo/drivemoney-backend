@@ -33,7 +33,7 @@ module Users
     end
 
     def send_forgot_mail(user:, token:, **)
-      UserMailer.forgot_password(id: user.id, token: token.token).deliver_later
+      UserMailer.forgot_password(id: user.id, token: token.token).deliver_now
       Success result: {user: user}
     end
   end
