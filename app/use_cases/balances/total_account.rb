@@ -8,9 +8,10 @@ module Balances
     private
 
     def account_total
-      sum_of_transactions = account.transactions.inject(account.initial_value) do |sum, num|
-        sum + num.value
-      end
+      initial_value = account.initial_value
+      sum_of_transactions = account
+        .transactions
+        .sum(:value) + initial_value
       Success result: {sum_of_transactions: sum_of_transactions}
     end
   end
