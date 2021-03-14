@@ -84,7 +84,8 @@ jobs:
         run: |
           echo Changed files: ${{ steps.get_file_changes.outputs.files }}
       - name: Standard checks
-        uses: cored/standard-action@0.0.1
+        run: |
+          bundle exec standard
       - name: Heroku Deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
