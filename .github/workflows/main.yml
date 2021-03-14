@@ -34,13 +34,18 @@ jobs:
         run: |
           gem install bundler
           bundler install
-      - name: Create database
-        run: |
-          bundler exec rails db:create RAILS_ENV=test
-          bundler exec rails db:migrate RAILS_ENV=test
       - name: Run tests
-        run: bundler exec rake
-      - name: Upload coverage results    
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 12345678
+          POSTGRES_DB: postgres
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:schema:load
+          bundle exec rspec --format progress
+      - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
         with:
