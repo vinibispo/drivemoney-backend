@@ -123,7 +123,8 @@ RSpec.describe "Users", type: :request do
     end
 
     it "recieves status of bad request when password does not match" do
-      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: FFaker::Internet.password(8), token: token}}
+      post "/api/v1/reset_password", params: {user: {password: password, password_confirmation: FFaker::Internet.password(8), token: token.token}}
+      expect(response).to have_http_status(:bad_request)
     end
   end
 end
