@@ -31,3 +31,4 @@ volumes/
 /config/application.yml
 /coverage/*
 lefthook.yml
+/.coveralls.yml
