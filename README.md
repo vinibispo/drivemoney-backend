@@ -1,29 +1,38 @@
-# README
+# DrivemoneyBackend
 
+---
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/testdouble/standard)
-<a href="https://drivemoney-backend.herokuapp.com">
-    <img alt="Maintainability" src="https://api.codeclimate.com/v1/badges/5c3c8ad1b0b943f88efd/maintainability">
-  </a>
+[![Heroku](https://heroku-badge.herokuapp.com/?app=drivemoney-backend&root=/api/v1/accounts)](https://drivemoney-backend.herokuapp.com/api/v1/accounts)
+[![Code Climate](https://badgen.net/codeclimate/maintainability/vinibispo/drivemoney-backend)](https://badgen.net/codeclimate/maintainability/vinibispo/drivemoney-backend)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-Things you may want to cover:
+---
 
 * Ruby version
-
-* System dependencies
+  
+  2.7.2
 
 * Configuration
 
+   ```bash
+    docker-compose up -d
+    ```
+
 * Database creation
+
+  ```bash
+  docker-compose exec web rails db:create
+  ```
 
 * Database initialization
 
+  ```bash
+  docker-compose exec web rails db:migrate
+  ```
+
 * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  ```bash
+  docker-compose exec -e "RAILS_ENV=test" web bundle exec rspec
+  ```
