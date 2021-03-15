@@ -57,10 +57,10 @@ jobs:
         with:
           name: coverage-report
           path: coverage
-          - name: Coveralls
-            uses: coverallsapp/github-action@master
-            with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   build:
     runs-on: ubuntu-latest
     steps:
