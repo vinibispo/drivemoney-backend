@@ -33,6 +33,8 @@
 
 :large_blue_diamond: [Funcionalidades](#funcionalidades)
 
+:large_blue_diamond: [Tecnologias utilizadas](#tecnologias-utilizadas) 
+
 :large_blue_diamond: [Pré-requisitos](#pré-requisitos)
 
 :large_blue_diamond: [Como rodar a aplicação](#como-rodar-a-aplicação)
@@ -70,6 +72,56 @@
 - [x] Atualização de transação
 
 - [x] Mostrar transação individualmente
+
+---
+
+### Tecnologias utilizadas
+
+:heavy_check_mark: Ruby
+
+Linguagem de programação utilizada para o backend
+
+
+
+:heavy_check_mark: Ruby on Rails
+
+Framework para o Backend
+
+
+
+:heavy_check_mark: Docker
+
+Ambiente virtual independente de sistema operacional
+
+
+
+:heavy_check_mark: Docker Compose
+
+Forma de gerenciar os ambientes do docker
+
+
+
+:heavy_check_mark: RSpec
+
+Suíte de testes para Ruby
+
+
+
+:heavy_check_mark: Standard
+
+Lint para ruby
+
+
+
+:heavy_check_mark: Brakeman
+
+Audit de código para ruby
+
+
+
+:heavy_check_mark: U-Case
+
+Gem para representar casos de uso de um jeito simples e poderoso
 
 ---
 
