@@ -16,6 +16,7 @@
 <a href="https://github.com/testdouble/standard">
 <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="">
 </a>
+<a href='https://coveralls.io/github/vinibispo/drivemoney-backend?branch=main'><img src='https://coveralls.io/repos/github/vinibispo/drivemoney-backend/badge.svg?branch=main' alt='Coverage Status' /></a>
 <a href="https://drivemoney-backend.herokuapp.com/api/v1/accounts">
 <img src="https://heroku-badge.herokuapp.com/?app=drivemoney-backend&root=/api/v1/accounts" alt="">
 </a>

@@ -40,6 +40,7 @@ end
 group :test do
   gem "shoulda-matchers", "~> 4.0"
   gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
 end
 
 group :development do
@@ -67,3 +68,4 @@ gem "pry-remote"
 gem "awesome_print"
 gem "standard"
 gem "securerandom"
+gem "coveralls", :require => false
