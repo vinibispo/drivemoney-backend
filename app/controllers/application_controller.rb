@@ -30,7 +30,7 @@ class ApplicationController < ActionController::API
   end
 
   def logged_in?
-    !!logged_in_user
+    logged_in_user.present?
   end
 
   def render_json(status, json = {})
