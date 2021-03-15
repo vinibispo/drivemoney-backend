@@ -47,7 +47,7 @@ module Users
     end
 
     def send_mail_welcome(user:, **)
-      UserMailer.with(user: user).welcome.deliver_later
+      UserMailer.with(user: user).welcome.deliver_now
       Success(:welcome_email_was_sent)
     end
   end
