@@ -2,6 +2,6 @@
   "name": "DrivemoneyBackend",
   "description": "A money control system",
   "repository": "https://github.com/vinibispo/drivemoney-backend",
-  "logo": "https://github.com/vinibispo/drivemoney-backend/tree/main/public/logo.png",
+  "logo": "https://raw.githubusercontent.com/vinibispo/drivemoney-backend/main/public/logo.png",
   "keywords": ["rails", "ruby", "money", "control"]
 }
