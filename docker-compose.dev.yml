@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12345678
+    ports:
+      - "5432:5432"
+    restart: always
+  redis:
+    image: redis
+    command: redis-server
+    volumes:
+      - ./volumes/redis:/data
+  #sidekiq:
+    #build: .
+    #command: sh -c "bundle exec sidekiq -C config/sidekiq.yml"
+    #environment:
+      #RAILS_ENV: development
+      #BUNDLE_PATH: /bundle/vendor
+      #LAUNCHY_DRY_RUN: "true"
+      #BROWSER: "/dev/null"
+    #volumes:
+      #- .:/myapp
+      #- bundle_path:/bundle
+    #depends_on:
+      #- redis
+    #stdin_open: true
+    #tty: true
+  web:
+    build: .
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    environment:
+      RAILS_ENV: development
+      BUNDLE_PATH: /bundle/vendor
+      WEB_CONCURRENCY: 0
+      LAUNCHY_DRY_RUN: "true"
+      BROWSER: "/dev/null"
+    volumes:
+      - .:/myapp
+      - bundle_path:/bundle
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+      - redis
+    stdin_open: true
+    tty: true
+    restart: always
+volumes:
+  bundle_path:
