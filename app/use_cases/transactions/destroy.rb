@@ -1,12 +1,13 @@
 module Transactions
   class Destroy < Micro::Case
     flow Transactions::Find,
-      self.call!
+      call!
     attribute :transaction
     validates :transaction, kind: Transaction
     def call!
       destroy_transaction
     end
+
     private
 
     def destroy_transaction
