@@ -43,7 +43,8 @@ module Users
 
     def serialize_user(user:, token:, **)
       user_as_json = user.as_json(only: [:id, :first_name, :last_name, :email])
-      Success result: {user: user_as_json.merge({"total": user.total}), token: token}
+      user_as_json["total"] = 0
+      Success result: {user: user_as_json, token: token}
     end
 
     def send_mail_welcome(user:, **)

@@ -34,7 +34,10 @@ module Users
 
     def serialize_user(user:, token:, **)
       user_as_json = user.as_json(only: [:id, :first_name, :last_name, :email])
-      Success result: {user: user_as_json.merge({"total": user.total}), token: token}
+      user_as_json["total"] = Balances::FetchForUser
+        .call(user: user)
+        .data[:balance]
+      Success result: {user: user_as_json, token: token}
     end
   end
 end

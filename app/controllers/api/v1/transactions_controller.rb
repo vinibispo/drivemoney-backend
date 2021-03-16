@@ -28,7 +28,7 @@ module Api
       def update
         Transactions::Update
           .call(id: params[:account_id], user: @user, transaction_id: params[:id], transaction_attributes: transaction_params)
-          .on_success { |result| render_json(:ok, {transaction: result[:transaction]}) }
+          .on_success { |result| render_transaction_show(result[:transaction], result[:account], :ok) }
           .on_failure(:not_found) { |result| render_json(:not_found, {message: result[:message]}) }
           .on_failure(:transaction_not_found) { |result| render_json(:not_found, {message: result[:message]}) }
           .on_failure(:unprocessable_entity) { |result| render_json(:unprocessable_entity, {errors: result[:errors]}) }
