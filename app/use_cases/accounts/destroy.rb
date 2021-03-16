@@ -1,7 +1,7 @@
 module Accounts
   class Destroy < Micro::Case
     flow Accounts::Find,
-      self.call!
+      call!
     attribute :account
     validates :account, kind: Account
 

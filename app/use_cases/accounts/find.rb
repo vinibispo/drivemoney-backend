@@ -11,18 +11,17 @@ module Accounts
 
     def verify_id
       if id.present?
-        return Success result: { id: id }
+        return Success result: {id: id}
       end
-      Failure(:not_found) { { message: "Account not found" } }
+      Failure(:not_found) { {message: "Account not found"} }
     end
 
     def find_account(id:, **)
       account = user.accounts.find_by(id: id)
       if account.present?
-        return Success result: { account: account }
+        return Success result: {account: account}
       end
-      Failure(:not_found) { { message: "Account not found" } }
+      Failure(:not_found) { {message: "Account not found"} }
     end
-
   end
 end

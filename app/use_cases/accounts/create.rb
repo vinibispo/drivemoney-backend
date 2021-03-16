@@ -8,12 +8,13 @@ module Accounts
     end
 
     private
+
     def create_account
       account = user.accounts.new(account_attributes)
       if account.save
-       return Success result: {account: account}
+        return Success result: {account: account}
       end
-      Failure(:unprocessable_entity) { { errors: account.errors } }
+      Failure(:unprocessable_entity) { {errors: account.errors} }
     end
   end
 end

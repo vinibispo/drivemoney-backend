@@ -17,20 +17,20 @@ module Api
       def update
         Accounts::Update
           .call(user: @user, id: params[:id], account_attributes: account_params)
-          .on_failure(:not_found) { |result|  render_json(:not_found, { message: 'Account not found' }) }
-          .on_failure(:unprocessable_entity) { |result| render_json(:unprocessable_entity, { errors: result[:errors] })}
+          .on_failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
+          .on_failure(:unprocessable_entity) { |result| render_json(:unprocessable_entity, {errors: result[:errors]}) }
           .on_success { |result| render_json(:ok, {account: result[:account]}) }
       end
 
       def destroy
         Accounts::Destroy
           .call(user: @user, id: params[:id])
-          .on_failure(:not_found) { |result|  render_json(:not_found, { message: 'Account not found' }) }
+          .on_failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
       end
 
       def show
         Accounts::Find.call(id: params[:id], user: @user) do |on|
-          on.failure(:not_found) { |result|  render_json(:not_found, { message: 'Account not found' }) }
+          on.failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
           on.success { |result| @account = result[:account] }
         end
       end

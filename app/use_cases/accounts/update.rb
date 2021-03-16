@@ -1,7 +1,7 @@
 module Accounts
   class Update < Micro::Case
     flow Accounts::Find,
-      self.call!
+      call!
     attribute :account
     attribute :account_attributes
 
@@ -12,11 +12,12 @@ module Accounts
     end
 
     private
-     def update_account
-       if account.update(account_attributes)
-         return Success result: { account: account }
-       end
-       Failure(:unprocessable_entity) { { errors: account.errors } }
-     end
+
+    def update_account
+      if account.update(account_attributes)
+        return Success result: {account: account}
+      end
+      Failure(:unprocessable_entity) { {errors: account.errors} }
+    end
   end
 end
