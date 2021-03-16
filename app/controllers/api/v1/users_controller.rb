@@ -1,7 +1,7 @@
 module Api
   module V1
-    class UsersController < ApplicationController
-      before_action :authorized, only: [:auto_login]
+    class UsersController < Api::V1::BaseController
+      skip_before_action :authorize!, except: [:auto_login]
 
       def create
         Users::Register

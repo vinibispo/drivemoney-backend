@@ -1,7 +1,6 @@
 module Api
   module V1
-    class AccountsController < ApplicationController
-      before_action :authorized
+    class AccountsController < Api::V1::BaseController
       before_action :set_account, only: [:update, :show, :destroy]
       def index
         @accounts = @user.accounts

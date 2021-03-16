@@ -1,7 +1,6 @@
 module Api
   module V1
-    class TransactionsController < ApplicationController
-      before_action :authorized
+    class TransactionsController < Api::V1::BaseController
       before_action :set_account
       before_action :set_transaction, only: [:show, :update, :destroy]
       def index
