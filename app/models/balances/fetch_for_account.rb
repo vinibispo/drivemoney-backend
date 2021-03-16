@@ -13,9 +13,9 @@ module Balances
         .transactions
         .where(status: :income)
         .sum(:value) - account
-        .transactions
-        .where(status: :outcome)
-        .sum(:value) + initial_value
+          .transactions
+          .where(status: :outcome)
+          .sum(:value) + initial_value
       Success result: {balance: balance}
     end
   end
