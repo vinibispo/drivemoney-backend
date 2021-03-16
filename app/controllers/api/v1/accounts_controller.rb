@@ -12,6 +12,8 @@ module Api
           .call(user: @user, account_attributes: account_params)
           .on_success { |result| render_account_show(result[:account]) }
           .on_failure(:unprocessable_entity) { |result| render json: result[:errors], status: :unprocessable_entity }
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def update
@@ -20,6 +22,8 @@ module Api
           .on_failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
           .on_failure(:unprocessable_entity) { |result| render_json(:unprocessable_entity, {errors: result[:errors]}) }
           .on_success { |result| render_json(:ok, {account: result[:account]}) }
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def destroy
