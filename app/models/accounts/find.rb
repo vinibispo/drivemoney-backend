@@ -3,20 +3,12 @@ module Accounts
     attribute :user
     attribute :id
     def call!
-      verify_id
-        .then(method(:find_account))
+      find_account
     end
 
     private
 
-    def verify_id
-      if id.present?
-        return Success result: {id: id}
-      end
-      Failure(:not_found) { {message: "Account not found"} }
-    end
-
-    def find_account(id:, **)
+    def find_account
       account = user.accounts.find_by(id: id)
       if account.present?
         return Success result: {account: account}
