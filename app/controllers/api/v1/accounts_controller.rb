@@ -1,35 +1,42 @@
 module Api
   module V1
-    class AccountsController < ApplicationController
-      before_action :authorized
-      before_action :set_account, only: [:update, :show, :destroy]
+    class AccountsController < Api::V1::BaseController
       def index
-        @accounts = @user.accounts
+        Accounts::Fetch
+          .call(user: @user)
+          .on_success { |result| @accounts = result[:accounts] }
       end
 
       def create
-        account = @user.accounts.new(account_params)
-        if account.save
-          @account = account
-          render :show, status: :created, location: api_v1_account_path(@account)
-        else
-          render json: account.errors, status: :unprocessable_entity
-        end
+        Accounts::Create
+          .call(user: @user, account_attributes: account_params)
+          .on_success { |result| render_account_show(result[:account]) }
+          .on_failure(:unprocessable_entity) { |result| render json: result[:errors], status: :unprocessable_entity }
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def update
-        if @account.update(account_params)
-          render json: {account: @account}
-        else
-          render json: @account.errors, status: :unprocessable_entity
-        end
+        Accounts::Update
+          .call(user: @user, id: params[:id], account_attributes: account_params)
+          .on_failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
+          .on_failure(:unprocessable_entity) { |result| render_json(:unprocessable_entity, {errors: result[:errors]}) }
+          .on_success { |result| render_account_show(result[:account], :ok) }
+      rescue ActionController::ParameterMissing => exception
+        render_json(:bad_request, error: exception.message)
       end
 
       def destroy
-        @account.destroy
+        Accounts::Destroy
+          .call(user: @user, id: params[:id])
+          .on_failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
       end
 
       def show
+        Accounts::Find.call(id: params[:id], user: @user) do |on|
+          on.failure(:not_found) { |result| render_json(:not_found, {message: "Account not found"}) }
+          on.success { |result| @account = result[:account] }
+        end
       end
 
       private
@@ -40,12 +47,9 @@ module Api
           .permit(:name, :initial_value, :active)
       end
 
-      def set_account
-        @account = @user.accounts.find_by(id: params[:id])
-        if @account.present?
-          return @account
-        end
-        render_json(:not_found, {message: "Account not found"})
+      def render_account_show(account, status = :created)
+        @account = account
+        render :show, status: status, location: api_v1_account_path(@account)
       end
     end
   end
