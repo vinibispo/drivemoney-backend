@@ -6,8 +6,4 @@ class User < ApplicationRecord
   validates :email, presence: true
   has_many :user_tokens
   enum status: [:common, :admin]
-
-  def total
-    Balances::TotalUser.call(user: self).data[:total_of_accounts]
-  end
 end
