@@ -1,0 +1,49 @@
+version: '3.3'
+
+x-app: &default-app
+  build:
+    context: .
+    dockerfile: Dockerfile.prod
+    target: "app"
+    args:
+      - "RAILS_ENV=${RAILS_ENV:-production}"
+  environment:
+    BUNDLE_PATH: /bundle/vendor
+    WEB_CONCURRENCY: 0
+    LAUNCHY_DRY_RUN: "true"
+    BROWSER: "/dev/null"
+  volumes:
+    - bundle_path:/bundle
+  ports:
+    - "3001:3001"
+  depends_on:
+    - db
+  stdin_open: true
+  tty: true
+  restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+  stop_grace_period: "3s"
+services:
+  db:
+    image: postgres
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_POSTGRES_CPUS:-0}"
+          memory: "${DOCKER_POSTGRES_MEMORY:-0}"
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: 12345678
+    ports:
+      - "5432:5432"
+    restart: always
+  web:
+    <<: *default-app
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
+volumes:
+  bundle_path:
