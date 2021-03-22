@@ -6,20 +6,20 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 
-require 'simplecov'
-require 'simplecov-lcov'
+require "simplecov"
+require "simplecov-lcov"
 
 SimpleCov::Formatter::LcovFormatter.config do |c|
   c.report_with_single_file = true
-  c.single_report_path = 'coverage/lcov.info'
+  c.single_report_path = "coverage/lcov.info"
 end
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
   [
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::LcovFormatter,
+    SimpleCov::Formatter::LcovFormatter
   ]
 )
-SimpleCov.start('rails')
+SimpleCov.start("rails")
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
