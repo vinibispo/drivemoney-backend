@@ -40,7 +40,7 @@
 
 :large_blue_diamond: [Como rodar a aplicação](#como-rodar-a-aplicação)
 
-:large_blue_diamond: [Como rodar os testes da aplicação](#como-rodar-os-testes-da-Aplicação)
+:large_blue_diamond: [Como rodar os testes da aplicação](#como-executar-a-suite-de-testes)
 
 ---
 
